@@ -224,42 +224,7 @@ abstract class Model extends BaseModel
     {
         return $this->casts;
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function originalIsEquivalent($key, $current)
-    {
-        if (!array_key_exists($key, $this->original)) {
-            return false;
-        }
-
-        $original = $this->getOriginal($key);
-
-        if ($current === $original) {
-            return true;
-        }
-
-        if (null === $current) {
-            return false;
-        }
-
-        if ($this->isDateAttribute($key)) {
-            $current = $current instanceof UTCDateTime ? $this->asDateTime($current) : $current;
-            $original = $original instanceof UTCDateTime ? $this->asDateTime($original) : $original;
-
-            return $current == $original;
-        }
-
-        if ($this->hasCast($key)) {
-            return $this->castAttribute($key, $current) ===
-                $this->castAttribute($key, $original);
-        }
-
-        return is_numeric($current) && is_numeric($original)
-            && strcmp((string) $current, (string) $original) === 0;
-    }
-
+    
     /**
      * Remove one or more fields.
      * @param mixed $columns
