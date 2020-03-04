@@ -21,6 +21,7 @@ trait QueriesRelationships
      * @param string $boolean
      * @param Closure|null $callback
      * @return Builder|static
+     * @throws Exception
      */
     public function has($relation, $operator = '>=', $count = 1, $boolean = 'and', Closure $callback = null)
     {
