@@ -228,7 +228,7 @@ abstract class Model extends BaseModel
         if (! array_key_exists($key, $this->original)) {
             return false;
         }
-        
+
         $attribute = Arr::get($this->attributes, $key);
         $original = Arr::get($this->original, $key);
 

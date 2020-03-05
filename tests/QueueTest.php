@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Carbon\Carbon;
-use Jenssegers\Mongodb\Queue\Failed\MongoFailedJobProvider;
 use Illuminate\Support\Str;
+use Jenssegers\Mongodb\Queue\Failed\MongoFailedJobProvider;
 
 class QueueTest extends TestCase
 {
