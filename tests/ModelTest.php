@@ -433,7 +433,7 @@ class ModelTest extends TestCase
 
         $data = $user->toArray();
         $this->assertNotInstanceOf(UTCDateTime::class, $data['entry']['date']);
-        $this->assertEquals((string) $user->getAttribute('entry.date')->toJson(), $data['entry']['date']);
+        $this->assertEquals((string) $user->getAttribute('entry.date')->format('c'), $data['entry']['date']);
     }
 
     public function testCarbonDateMockingWorks()
