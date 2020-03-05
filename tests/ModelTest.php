@@ -399,7 +399,7 @@ class ModelTest extends TestCase
 
         // test custom date format for json output
         $json = $user->toArray();
-        $this->assertEquals($user->birthday->format('c'), $json['birthday']);
+        $this->assertEquals($user->birthday->toJson(), $json['birthday']);
 
         // test created_at
         $item = Item::create(['name' => 'sword']);
@@ -413,7 +413,7 @@ class ModelTest extends TestCase
         /** @var Item $item */
         $item = Item::create(['name' => 'sword']);
         $json = $item->toArray();
-        $this->assertEquals($item->created_at->format('c'), $json['created_at']);
+        $this->assertEquals($item->created_at->toJson(), $json['created_at']);
 
         /** @var User $user */
         $user = User::create(['name' => 'Jane Doe', 'birthday' => time()]);
@@ -433,7 +433,7 @@ class ModelTest extends TestCase
 
         $data = $user->toArray();
         $this->assertNotInstanceOf(UTCDateTime::class, $data['entry']['date']);
-        $this->assertEquals((string) $user->getAttribute('entry.date')->format('c'), $data['entry']['date']);
+        $this->assertEquals((string) $user->getAttribute('entry.date')->toJson(), $data['entry']['date']);
     }
 
     public function testCarbonDateMockingWorks()
