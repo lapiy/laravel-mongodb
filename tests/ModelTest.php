@@ -403,8 +403,8 @@ class ModelTest extends TestCase
 
         // test created_at
         $item = Item::create(['name' => 'sword']);
-        $this->assertInstanceOf(UTCDateTime::class, $item->getOriginal('created_at'));
-        $this->assertEquals($item->getOriginal('created_at')
+        $this->assertInstanceOf(UTCDateTime::class, $item->getRawOriginal('created_at'));
+        $this->assertEquals($item->getRawOriginal('created_at')
             ->toDateTime()
             ->getTimestamp(), $item->created_at->getTimestamp());
         $this->assertLessThan(2, abs(time() - $item->created_at->getTimestamp()));
