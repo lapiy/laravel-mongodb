@@ -14,7 +14,9 @@ class DatabaseEloquentTimestampsTest extends TestCase
      */
     protected function tearDown(): void
     {
-        User::truncate();
+        $this->schema()->drop('users');
+        $this->schema()->drop('users_created_at');
+        $this->schema()->drop('users_updated_at');
     }
 
     /**
