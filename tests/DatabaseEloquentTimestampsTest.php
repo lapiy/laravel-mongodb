@@ -7,7 +7,6 @@ use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 class DatabaseEloquentTimestampsTest extends TestCase
 {
-
     /**
      * Tear down the database schema.
      *

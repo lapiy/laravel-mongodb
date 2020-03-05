@@ -404,7 +404,7 @@ class ModelTest extends TestCase
             ->toDateTime()
             ->getTimestamp(), $item->created_at->getTimestamp());
         $this->assertLessThan(2, abs(time() - $item->created_at->getTimestamp()));
-        
+
         /** @var User $user */
         $user = User::create(['name' => 'Jane Doe', 'birthday' => time()]);
         $this->assertInstanceOf(Carbon::class, $user->birthday);
