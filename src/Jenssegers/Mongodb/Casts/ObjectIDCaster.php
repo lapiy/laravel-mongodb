@@ -40,7 +40,7 @@ class ObjectIDCaster implements CastsAttributes
                 return new ObjectID($value);
 
             case $value instanceof ObjectID:
-                return new ObjectID((string) $value);
+                return $value;
 
             default:
                 throw new InvalidArgumentException('Invalid object ID passed');
