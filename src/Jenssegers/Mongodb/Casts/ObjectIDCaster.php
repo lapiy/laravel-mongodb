@@ -4,7 +4,7 @@ namespace Jenssegers\Mongodb\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use MongoDB\BSON\ObjectID;
-use MongoException;
+use InvalidArgumentException;
 
 class ObjectIDCaster implements CastsAttributes
 {
@@ -30,7 +30,7 @@ class ObjectIDCaster implements CastsAttributes
      * @param array $value
      * @param array $attributes
      * @return string
-     * @throws MongoException
+     * @throws InvalidArgumentException
      */
     public function set($model, $key, $value, $attributes)
     {
@@ -43,7 +43,7 @@ class ObjectIDCaster implements CastsAttributes
                 return new ObjectID((string) $value);
 
             default:
-                throw new MongoException('Invalid object ID passed', 19);
+                throw new InvalidArgumentException('Invalid object ID passed');
 
         }
     }

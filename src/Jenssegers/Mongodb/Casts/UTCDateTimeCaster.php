@@ -6,7 +6,7 @@ use DateTime;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Support\Facades\Date;
 use MongoDB\BSON\UTCDateTime;
-use MongoException;
+use InvalidArgumentException;
 
 class UTCDateTimeCaster implements CastsAttributes
 {
@@ -36,7 +36,7 @@ class UTCDateTimeCaster implements CastsAttributes
      * @param array $value
      * @param array $attributes
      * @return UTCDateTime
-     * @throws MongoException
+     * @throws InvalidArgumentException
      */
     public function set($model, $key, $value, $attributes)
     {
@@ -49,7 +49,7 @@ class UTCDateTimeCaster implements CastsAttributes
                 return $value;
 
             default:
-                throw new MongoException('Invalid DateTime or UTCDateTime passed', 19);
+                throw new InvalidArgumentException('Invalid DateTime or UTCDateTime passed');
 
         }
     }
