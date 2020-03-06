@@ -100,34 +100,6 @@ class ModelTest extends TestCase
 
         $this->assertInstanceOf(ObjectID::class, $user->getRawOriginal('_id'));
 
-        $user = new User;
-        $user->_id = 'customId';
-        $user->name = 'John Doe';
-        $user->title = 'admin';
-        $user->age = 35;
-        $user->save();
-
-        $this->assertTrue($user->exists);
-        $this->assertEquals('customId', $user->_id);
-
-        $raw = $user->getAttributes();
-        $this->assertIsString($raw['_id']);
-    }
-
-    public function testManualIntId(): void
-    {
-        $user = new User;
-        $user->_id = 1;
-        $user->name = 'John Doe';
-        $user->title = 'admin';
-        $user->age = 35;
-        $user->save();
-
-        $this->assertTrue($user->exists);
-        $this->assertEquals(1, $user->_id);
-
-        $raw = $user->getAttributes();
-        $this->assertIsInt($raw['_id']);
     }
 
     public function testDelete(): void

@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Jenssegers\Mongodb\Eloquent\HybridRelations;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Jenssegers\Mongodb\Casts\ObjectIDCaster;
+use Jenssegers\Mongodb\Casts\UTCDateTimeCaster;
 
 /**
  * Class User.
@@ -27,7 +28,7 @@ class User extends Eloquent implements AuthenticatableContract, CanResetPassword
 
     protected $connection = 'mongodb';
     protected $dates = ['birthday'];
-    protected $casts = ['_id' => ObjectIDCaster::class];
+    protected $casts = ['_id' => ObjectIDCaster::class, 'created_at' => UTCDateTimeCaster::class, 'updated_at' => UTCDateTimeCaster::class];
     protected static $unguarded = true;
 
     public function books()
