@@ -899,15 +899,15 @@ class Message extends Model
 ```
 
 ### Authentication
-If you want to use Laravel's native Auth functionality, register this included service provider:
+If you want to use Laravel's native Auth functionality, replace in your User model:
 
 ```php
-Jenssegers\Mongodb\Auth\PasswordResetServiceProvider::class,
+use Illuminate\Foundation\Auth\User as Authenticatable;
 ```
-
-This service provider will slightly modify the internal DatabaseReminderRepository to add support for MongoDB based password reminders.
-
-If you don't use password reminders, you don't have to register this service provider and everything else should work just fine.
+with
+```php
+use Jenssegers\Mongodb\Auth\User as Authenticatable;
+```
 
 ### Queues
 If you want to use MongoDB as your database backend, change the driver in `config/queue.php`:

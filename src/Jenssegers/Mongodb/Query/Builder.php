@@ -3,7 +3,6 @@
 namespace Jenssegers\Mongodb\Query;
 
 use Closure;
-use DateTime;
 use Illuminate\Database\Query\Builder as BaseBuilder;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Arr;
@@ -11,10 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Jenssegers\Mongodb\Connection;
 use MongoCollection;
-use MongoDB\BSON\Binary;
-use MongoDB\BSON\ObjectID;
 use MongoDB\BSON\Regex;
-use MongoDB\BSON\UTCDateTime;
 
 class Builder extends BaseBuilder
 {
@@ -166,7 +162,7 @@ class Builder extends BaseBuilder
      */
     public function find($id, $columns = [])
     {
-        return $this->where('_id', '=', $this->convertKey($id))->first($columns);
+        return $this->where($this->getKeyName(), '=', $id)->first($columns);
     }
 
     /**
@@ -630,15 +626,6 @@ class Builder extends BaseBuilder
     {
         $results = $this->get($key === null ? [$column] : [$column, $key]);
 
-        // Convert ObjectID's to strings
-        if ($key == '_id') {
-            $results = $results->map(function ($item) {
-                $item['_id'] = (string) $item['_id'];
-
-                return $item;
-            });
-        }
-
         $p = Arr::pluck($results, $column, $key);
 
         return new Collection($p);
@@ -824,24 +811,6 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Convert a key to ObjectID if needed.
-     * @param mixed $id
-     * @return mixed
-     */
-    public function convertKey($id)
-    {
-        if (is_string($id) && strlen($id) === 24 && ctype_xdigit($id)) {
-            return new ObjectID($id);
-        }
-
-        if (is_string($id) && strlen($id) === 16 && preg_match('~[^\x20-\x7E\t\r\n]~', $id) > 0) {
-            return new Binary($id, Binary::TYPE_UUID);
-        }
-
-        return $id;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function where($column, $operator = null, $value = null, $boolean = 'and')
@@ -892,40 +861,6 @@ class Builder extends BaseBuilder
                 if (array_key_exists($where['operator'], $convert)) {
                     $where['operator'] = $convert[$where['operator']];
                 }
-            }
-
-            // Convert id's.
-            if (isset($where['column']) && ($where['column'] == '_id' || Str::endsWith($where['column'], '._id'))) {
-                // Multiple values.
-                if (isset($where['values'])) {
-                    foreach ($where['values'] as &$value) {
-                        $value = $this->convertKey($value);
-                    }
-                } // Single value.
-                elseif (isset($where['value'])) {
-                    $where['value'] = $this->convertKey($where['value']);
-                }
-            }
-
-            // Convert DateTime values to UTCDateTime.
-            if (isset($where['value'])) {
-                if (is_array($where['value'])) {
-                    array_walk_recursive($where['value'], function (&$item, $key) {
-                        if ($item instanceof DateTime) {
-                            $item = new UTCDateTime($item->format('Uv'));
-                        }
-                    });
-                } else {
-                    if ($where['value'] instanceof DateTime) {
-                        $where['value'] = new UTCDateTime($where['value']->format('Uv'));
-                    }
-                }
-            } elseif (isset($where['values'])) {
-                array_walk_recursive($where['values'], function (&$item, $key) {
-                    if ($item instanceof DateTime) {
-                        $item = new UTCDateTime($item->format('Uv'));
-                    }
-                });
             }
 
             // The next item in a "chain" of wheres devices the boolean of the

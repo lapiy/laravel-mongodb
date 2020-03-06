@@ -6,19 +6,6 @@ use Illuminate\Auth\Passwords\PasswordResetServiceProvider;
 
 class TestCase extends Orchestra\Testbench\TestCase
 {
-    /**
-     * Get application providers.
-     * @param \Illuminate\Foundation\Application $app
-     * @return array
-     */
-    protected function getApplicationProviders($app)
-    {
-        $providers = parent::getApplicationProviders($app);
-
-        unset($providers[array_search(PasswordResetServiceProvider::class, $providers)]);
-
-        return $providers;
-    }
 
     /**
      * Get package providers.
@@ -30,7 +17,6 @@ class TestCase extends Orchestra\Testbench\TestCase
         return [
             Jenssegers\Mongodb\MongodbServiceProvider::class,
             Jenssegers\Mongodb\MongodbQueueServiceProvider::class,
-            Jenssegers\Mongodb\Auth\PasswordResetServiceProvider::class,
             Jenssegers\Mongodb\Validation\ValidationServiceProvider::class,
         ];
     }

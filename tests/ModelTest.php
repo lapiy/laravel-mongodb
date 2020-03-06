@@ -49,8 +49,7 @@ class ModelTest extends TestCase
         $this->assertNotEquals(0, strlen((string) $user->_id));
         $this->assertInstanceOf(Carbon::class, $user->created_at);
 
-        $raw = $user->getAttributes();
-        $this->assertInstanceOf(ObjectID::class, $raw['_id']);
+        $this->assertInstanceOf(ObjectID::class, $user->getRawOriginal('_id'));
 
         $this->assertEquals('John Doe', $user->name);
         $this->assertEquals(35, $user->age);
@@ -64,8 +63,7 @@ class ModelTest extends TestCase
         $user->age = 35;
         $user->save();
 
-        $raw = $user->getAttributes();
-        $this->assertInstanceOf(ObjectID::class, $raw['_id']);
+        $this->assertInstanceOf(ObjectID::class, $user->getRawOriginal('_id'));
 
         /** @var User $check */
         $check = User::find($user->_id);
@@ -82,8 +80,7 @@ class ModelTest extends TestCase
 
         $user->update(['age' => 20]);
 
-        $raw = $user->getAttributes();
-        $this->assertInstanceOf(ObjectID::class, $raw['_id']);
+        $this->assertInstanceOf(ObjectID::class, $user->getRawOriginal('_id'));
 
         $check = User::find($user->_id);
         $this->assertEquals(20, $check->age);
@@ -101,8 +98,7 @@ class ModelTest extends TestCase
         $this->assertTrue($user->exists);
         $this->assertEquals('4af9f23d8ead0e1d32000000', $user->_id);
 
-        $raw = $user->getAttributes();
-        $this->assertInstanceOf(ObjectID::class, $raw['_id']);
+        $this->assertInstanceOf(ObjectID::class, $user->getRawOriginal('_id'));
 
         $user = new User;
         $user->_id = 'customId';
@@ -415,15 +411,6 @@ class ModelTest extends TestCase
         $user = User::create(['name' => 'Jane Doe', 'birthday' => '2005-08-08']);
         $this->assertInstanceOf(Carbon::class, $user->birthday);
 
-        $user = User::create(['name' => 'Jane Doe', 'entry' => ['date' => '2005-08-08']]);
-        $this->assertInstanceOf(Carbon::class, $user->getAttribute('entry.date'));
-
-        $user->setAttribute('entry.date', new DateTime);
-        $this->assertInstanceOf(Carbon::class, $user->getAttribute('entry.date'));
-
-        $data = $user->toArray();
-        $this->assertNotInstanceOf(UTCDateTime::class, $data['entry']['date']);
-        $this->assertEquals((string) $user->getAttribute('entry.date')->format('Y-m-d H:i:s'), $data['entry']['date']);
     }
 
     public function testCarbonDateMockingWorks()
@@ -500,45 +487,6 @@ class ModelTest extends TestCase
             return $collection->insertOne(['name' => 'Yvonne Yoe', 'age' => 35]);
         });
         $this->assertNotNull($result);
-    }
-
-    public function testDotNotation(): void
-    {
-        $user = User::create([
-            'name' => 'John Doe',
-            'address' => [
-                'city' => 'Paris',
-                'country' => 'France',
-            ],
-        ]);
-
-        $this->assertEquals('Paris', $user->getAttribute('address.city'));
-        $this->assertEquals('Paris', $user['address.city']);
-        $this->assertEquals('Paris', $user->{'address.city'});
-
-        // Fill
-        $user->fill([
-            'address.city' => 'Strasbourg',
-        ]);
-
-        $this->assertEquals('Strasbourg', $user['address.city']);
-    }
-
-    public function testMultipleLevelDotNotation(): void
-    {
-        /** @var Book $book */
-        $book = Book::create([
-            'title' => 'A Game of Thrones',
-            'chapters' => [
-                'one' => [
-                    'title' => 'The first chapter',
-                ],
-            ],
-        ]);
-
-        $this->assertEquals(['one' => ['title' => 'The first chapter']], $book->chapters);
-        $this->assertEquals(['title' => 'The first chapter'], $book['chapters.one']);
-        $this->assertEquals('The first chapter', $book['chapters.one.title']);
     }
 
     public function testGetDirtyDates(): void

@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Notifications\Notifiable;
 use Jenssegers\Mongodb\Eloquent\HybridRelations;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use Jenssegers\Mongodb\Casts\ObjectIDCaster;
 
 /**
  * Class User.
@@ -25,7 +26,8 @@ class User extends Eloquent implements AuthenticatableContract, CanResetPassword
     use Authenticatable, CanResetPassword, HybridRelations, Notifiable;
 
     protected $connection = 'mongodb';
-    protected $dates = ['birthday', 'entry.date'];
+    protected $dates = ['birthday'];
+    protected $casts = ['_id' => ObjectIDCaster::class];
     protected static $unguarded = true;
 
     public function books()
@@ -66,10 +68,5 @@ class User extends Eloquent implements AuthenticatableContract, CanResetPassword
     public function photos()
     {
         return $this->morphMany('Photo', 'imageable');
-    }
-
-    public function getDateFormat()
-    {
-        return 'l jS \of F Y h:i:s A';
     }
 }

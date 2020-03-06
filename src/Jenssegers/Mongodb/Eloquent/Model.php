@@ -2,18 +2,13 @@
 
 namespace Jenssegers\Mongodb\Eloquent;
 
-use DateTime;
 use Illuminate\Contracts\Queue\QueueableCollection;
 use Illuminate\Contracts\Queue\QueueableEntity;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 use Jenssegers\Mongodb\Query\Builder as QueryBuilder;
-use MongoDB\BSON\Binary;
-use MongoDB\BSON\ObjectID;
-use MongoDB\BSON\UTCDateTime;
 
 abstract class Model extends BaseModel
 {
@@ -56,13 +51,6 @@ abstract class Model extends BaseModel
             $value = $this->attributes['_id'];
         }
 
-        // Convert ObjectID to string.
-        if ($value instanceof ObjectID) {
-            return (string) $value;
-        } elseif ($value instanceof Binary) {
-            return (string) $value->getData();
-        }
-
         return $value;
     }
 
@@ -77,37 +65,6 @@ abstract class Model extends BaseModel
     /**
      * {@inheritdoc}
      */
-    public function fromDateTime($value)
-    {
-        // If the value is already a UTCDateTime instance, we don't need to parse it.
-        if ($value instanceof UTCDateTime) {
-            return $value;
-        }
-
-        // Let Eloquent convert the value to a DateTime instance.
-        if (! $value instanceof DateTime) {
-            $value = parent::asDateTime($value);
-        }
-
-        return new UTCDateTime($value->format('Uv'));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function asDateTime($value)
-    {
-        // Convert UTCDateTime instances.
-        if ($value instanceof UTCDateTime) {
-            return Date::createFromTimestampMs($value->toDateTime()->format('Uv'));
-        }
-
-        return parent::asDateTime($value);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getDateFormat()
     {
         return $this->dateFormat ?: 'Y-m-d H:i:s';
@@ -116,108 +73,9 @@ abstract class Model extends BaseModel
     /**
      * {@inheritdoc}
      */
-    public function freshTimestamp()
-    {
-        return new UTCDateTime(Date::now()->format('Uv'));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getTable()
     {
         return $this->collection ?: parent::getTable();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAttribute($key)
-    {
-        if (! $key) {
-            return;
-        }
-
-        // Dot notation support.
-        if (Str::contains($key, '.') && Arr::has($this->attributes, $key)) {
-            return $this->getAttributeValue($key);
-        }
-
-        return parent::getAttribute($key);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getAttributeFromArray($key)
-    {
-        // Support keys in dot notation.
-        if (Str::contains($key, '.')) {
-            return Arr::get($this->attributes, $key);
-        }
-
-        return parent::getAttributeFromArray($key);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setAttribute($key, $value)
-    {
-        // Convert _id to ObjectID.
-        if ($key == '_id' && is_string($value)) {
-            $builder = $this->newBaseQueryBuilder();
-
-            $value = $builder->convertKey($value);
-        } // Support keys in dot notation.
-        elseif (Str::contains($key, '.')) {
-            if (in_array($key, $this->getDates()) && $value) {
-                $value = $this->fromDateTime($value);
-            }
-
-            Arr::set($this->attributes, $key, $value);
-
-            return;
-        }
-
-        return parent::setAttribute($key, $value);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributesToArray()
-    {
-        $attributes = parent::attributesToArray();
-
-        // Because the original Eloquent never returns objects, we convert
-        // MongoDB related objects to a string representation. This kind
-        // of mimics the SQL behaviour so that dates are formatted
-        // nicely when your models are converted to JSON.
-        foreach ($attributes as $key => &$value) {
-            if ($value instanceof ObjectID) {
-                $value = (string) $value;
-            } elseif ($value instanceof Binary) {
-                $value = (string) $value->getData();
-            }
-        }
-
-        // Convert dot-notation dates.
-        foreach ($this->getDates() as $key) {
-            if (Str::contains($key, '.') && Arr::has($attributes, $key)) {
-                Arr::set($attributes, $key, (string) $this->asDateTime(Arr::get($attributes, $key)));
-            }
-        }
-
-        return $attributes;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCasts()
-    {
-        return $this->casts;
     }
 
     /**
@@ -241,10 +99,8 @@ abstract class Model extends BaseModel
         }
 
         if ($this->isDateAttribute($key)) {
-            $attribute = $attribute instanceof UTCDateTime ? $this->asDateTime($attribute) : $attribute;
-            $original = $original instanceof UTCDateTime ? $this->asDateTime($original) : $original;
-
-            return $attribute == $original;
+            return $this->fromDateTime($attribute) ===
+                $this->fromDateTime($original);
         }
 
         if ($this->hasCast($key, static::$primitiveCastTypes)) {
