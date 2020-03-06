@@ -52,6 +52,26 @@ class DatabaseEloquentTimestampsTest extends TestCase
 
         $this->assertEquals($now->toDateTimeString(), $user->updated_at->toDateTimeString());
     }
+
+    /**
+     * Get a database connection instance.
+     *
+     * @return \Illuminate\Database\ConnectionInterface
+     */
+    protected function connection()
+    {
+        return Eloquent::getConnectionResolver()->connection();
+    }
+
+    /**
+     * Get a schema builder instance.
+     *
+     * @return \Illuminate\Database\Schema\Builder
+     */
+    protected function schema()
+    {
+        return $this->connection()->getSchemaBuilder();
+    }
 }
 
 /**
