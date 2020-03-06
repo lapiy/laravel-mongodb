@@ -27,12 +27,6 @@ abstract class Model extends BaseModel
     protected $primaryKey = '_id';
 
     /**
-     * The primary key type.
-     * @var string
-     */
-    protected $keyType = 'objectid';
-
-    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool
