@@ -162,7 +162,7 @@ class Builder extends BaseBuilder
      */
     public function find($id, $columns = [])
     {
-        return $this->where($this->getKeyName(), '=', $id)->first($columns);
+        return $this->where('_id', '=', $id)->first($columns);
     }
 
     /**
