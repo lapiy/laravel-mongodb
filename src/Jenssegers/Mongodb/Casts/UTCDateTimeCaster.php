@@ -4,6 +4,7 @@ namespace Jenssegers\Mongodb\Casts;
 
 use DateTime;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Date;
 use MongoDB\BSON\UTCDateTime;
 use InvalidArgumentException;
@@ -47,6 +48,12 @@ class UTCDateTimeCaster implements CastsAttributes
 
             case $value instanceof UTCDateTime:
                 return $value;
+
+            case is_numeric($value):
+                return new UTCDateTime(Date::createFromTimestamp($value));
+
+            case is_string($value):
+                return new UTCDateTime(Carbon::parse($value)->setTimezone('UTC'));
 
             default:
                 throw new InvalidArgumentException('Invalid DateTime or UTCDateTime passed');

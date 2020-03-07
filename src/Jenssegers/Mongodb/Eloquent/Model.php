@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Jenssegers\Mongodb\Query\Builder as QueryBuilder;
+use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\Binary;
 
 abstract class Model extends BaseModel
 {
@@ -27,6 +29,12 @@ abstract class Model extends BaseModel
     protected $primaryKey = '_id';
 
     /**
+     * The primary key type.
+     * @var string
+     */
+    protected $keyType = 'objectid';
+
+    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool
@@ -40,19 +48,13 @@ abstract class Model extends BaseModel
     protected $parentRelation;
 
     /**
-     * Custom accessor for the model's id.
-     * @param mixed $value
-     * @return mixed
+     * Get the default key name of the table.
+     *
+     * @return string
      */
-    public function getIdAttribute($value = null)
+    protected function defaultKeyName()
     {
-        // If we don't have a value for 'id', we will use the Mongo '_id' value.
-        // This allows us to work with models in a more sql-like way.
-        if (! $value && array_key_exists('_id', $this->attributes)) {
-            $value = $this->attributes['_id'];
-        }
-
-        return $value;
+        return '_id';
     }
 
     /**
@@ -61,14 +63,6 @@ abstract class Model extends BaseModel
     public function getQualifiedKeyName()
     {
         return $this->getKeyName();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDateFormat()
-    {
-        return $this->dateFormat ?: 'Y-m-d H:i:s';
     }
 
     /**

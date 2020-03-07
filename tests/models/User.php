@@ -28,8 +28,9 @@ class User extends Eloquent implements AuthenticatableContract, CanResetPassword
 
     protected $connection = 'mongodb';
     protected $dates = ['birthday'];
-    protected $casts = ['_id' => ObjectIDCaster::class];
-    // 'created_at' => UTCDateTimeCaster::class, 'updated_at' => UTCDateTimeCaster::class
+    protected $casts = ['_id' => ObjectIDCaster::class, 'created_at' => UTCDateTimeCaster::class, 'updated_at' => UTCDateTimeCaster::class, 'birthday' => UTCDateTimeCaster::class];
+    protected $dateFormat = 'U';
+
     protected static $unguarded = true;
 
     public function books()

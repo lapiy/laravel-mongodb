@@ -41,46 +41,6 @@ class Builder extends EloquentBuilder
     /**
      * {@inheritdoc}
      */
-    public function insert(array $values)
-    {
-        return parent::insert($values);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function insertGetId(array $values, $sequence = null)
-    {
-        return parent::insertGetId($values, $sequence);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function delete()
-    {
-        return parent::delete();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function increment($column, $amount = 1, array $extra = [])
-    {
-        return parent::increment($column, $amount, $extra);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function decrement($column, $amount = 1, array $extra = [])
-    {
-        return parent::decrement($column, $amount, $extra);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function chunkById($count, callable $callback, $column = '_id', $alias = null)
     {
         return parent::chunkById($count, $callback, $column, $alias);
@@ -110,29 +70,6 @@ class Builder extends EloquentBuilder
         }
 
         return $results;
-    }
-
-    /**
-     * Add the "updated at" column to an array of values.
-     * TODO Remove if https://github.com/laravel/framework/commit/6484744326531829341e1ff886cc9b628b20d73e
-     * wiil be reverted
-     * Issue in laravel frawework https://github.com/laravel/framework/issues/27791.
-     * @param array $values
-     * @return array
-     */
-    protected function addUpdatedAtColumn(array $values)
-    {
-        if (! $this->model->usesTimestamps() || $this->model->getUpdatedAtColumn() === null) {
-            return $values;
-        }
-
-        $column = $this->model->getUpdatedAtColumn();
-        $values = array_merge(
-            [$column => $this->model->freshTimestampString()],
-            $values
-        );
-
-        return $values;
     }
 
     /**
