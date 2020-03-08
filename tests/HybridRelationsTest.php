@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Database\MySqlConnection;
+use MongoDB\BSON\ObjectId;
 
 class HybridRelationsTest extends TestCase
 {
@@ -61,7 +62,7 @@ class HybridRelationsTest extends TestCase
         // MongoDB has many
         $book = new MysqlBook(['title' => 'Game of Thrones']);
         $user->mysqlBooks()->save($book);
-        $user = User::find($user->_id); // refetch
+        $user = User::find(new ObjectId($user->_id)); // refetch
         $this->assertCount(1, $user->mysqlBooks);
 
         // SQL belongs to
@@ -71,7 +72,7 @@ class HybridRelationsTest extends TestCase
         // MongoDB has one
         $role = new MysqlRole(['type' => 'admin']);
         $user->mysqlRole()->save($role);
-        $user = User::find($user->_id); // refetch
+        $user = User::find(new ObjectId($user->_id)); // refetch
         $this->assertEquals('admin', $user->mysqlRole->type);
 
         // SQL belongs to
