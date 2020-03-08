@@ -44,7 +44,7 @@ class ModelTest extends TestCase
         $this->assertEquals(1, User::count());
 
         $this->assertTrue(isset($user->_id));
-        $this->assertIsString($user->_id);
+        $this->assertIsString((string) $user->_id);
         $this->assertNotEquals('', (string) $user->_id);
         $this->assertNotEquals(0, strlen((string) $user->_id));
         $this->assertInstanceOf(Carbon::class, $user->created_at);
@@ -225,7 +225,7 @@ class ModelTest extends TestCase
         $user->age = 35;
         $user->save();
 
-        User::destroy((string) $user->_id);
+        User::destroy($user->_id);
 
         $this->assertEquals(0, User::count());
     }
@@ -393,16 +393,6 @@ class ModelTest extends TestCase
         $item = Item::create(['name' => 'sword']);
 
         $this->assertLessThan(1, $fakeDate->diffInSeconds($item->created_at));
-    }
-
-    public function testIdAttribute(): void
-    {
-        /** @var User $user */
-        $user = User::create(['name' => 'John Doe']);
-        $this->assertEquals($user->id, $user->_id);
-
-        $user = User::create(['id' => 'custom_id', 'name' => 'John Doe']);
-        $this->assertNotEquals($user->id, $user->_id);
     }
 
     public function testPushPull(): void

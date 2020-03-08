@@ -21,11 +21,9 @@ class QueryBuilderTest extends TestCase
 
     public function testDeleteWithId()
     {
-        $user = DB::collection('users')->insertGetId([
+        $user_id = DB::collection('users')->insertGetId([
             ['name' => 'Jane Doe', 'age' => 20],
         ]);
-
-        $user_id = (string) $user;
 
         DB::collection('items')->insert([
             ['name' => 'one thing', 'user_id' => $user_id],
