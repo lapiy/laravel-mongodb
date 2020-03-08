@@ -108,7 +108,7 @@ class RelationsTest extends TestCase
         Item::create(['type' => 'sword', 'user_id' => $user->_id]);
         Item::create(['type' => 'bag', 'user_id' => null]);
 
-        $user = User::with('items')->find(new ObjectID($user->_id));
+        $user = User::with('items')->find($user->_id);
 
         $items = $user->getRelation('items');
         $this->assertCount(3, $items);
@@ -121,7 +121,7 @@ class RelationsTest extends TestCase
         Role::create(['type' => 'admin', 'user_id' => $user->_id]);
         Role::create(['type' => 'guest', 'user_id' => $user->_id]);
 
-        $user = User::with('role')->find(new ObjectID($user->_id));
+        $user = User::with('role')->find($user->_id);
 
         $role = $user->getRelation('role');
         $this->assertInstanceOf(Role::class, $role);
@@ -135,7 +135,7 @@ class RelationsTest extends TestCase
         $item = Item::create(['type' => 'knife']);
         $user->items()->save($item);
 
-        $user = User::find(new ObjectID($user->_id));
+        $user = User::find($user->_id);
         $items = $user->items;
         $this->assertCount(1, $items);
         $this->assertInstanceOf(Item::class, $items[0]);
@@ -331,7 +331,7 @@ class RelationsTest extends TestCase
         $group = $user->groups()->create(['name' => 'Admins']);
 
         // Refetch
-        $user = User::find(new ObjectID($user->_id));
+        $user = User::find($user->_id);
         $group = Group::find(new ObjectID($group->_id));
 
         // Check for custom relation attributes
@@ -354,7 +354,7 @@ class RelationsTest extends TestCase
         $this->assertEquals(1, $user->photos->count());
         $this->assertEquals($photo->id, $user->photos->first()->id);
 
-        $user = User::find(new ObjectID($user->_id));
+        $user = User::find($user->_id);
         $this->assertEquals(1, $user->photos->count());
         $this->assertEquals($photo->id, $user->photos->first()->id);
 
