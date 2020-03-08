@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Eloquent\Collection;
+use MongoDB\BSON\ObjectID;
 
 class RelationsTest extends TestCase
 {
@@ -330,8 +331,8 @@ class RelationsTest extends TestCase
         $group = $user->groups()->create(['name' => 'Admins']);
 
         // Refetch
-        $user = User::find($user->_id);
-        $group = Group::find($group->_id);
+        $user = User::find(new ObjectID($user->_id));
+        $group = Group::find(new ObjectID($group->_id));
 
         // Check for custom relation attributes
         $this->assertArrayHasKey('users', $group->getAttributes());
@@ -339,7 +340,7 @@ class RelationsTest extends TestCase
 
         // Assert they are attached
         $this->assertEquals($group->_id, $user->groups()->first()->_id);
-        $this->assertEquals($user->_id, $group->users()->first()->_id);
+        $this->assertEquals($user->_id, (string) $group->users()->first()->_id);
     }
 
     public function testMorph(): void

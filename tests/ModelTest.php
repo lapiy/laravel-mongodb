@@ -411,7 +411,7 @@ class ModelTest extends TestCase
         $user->pull('tags', 'tag1');
 
         $this->assertEquals(['tag2'], $user->tags);
-        $user = User::where('_id', $user->_id)->first();
+        $user = User::where('_id', new ObjectID($user->_id))->first();
         $this->assertEquals(['tag2'], $user->tags);
 
         $user->push('tags', 'tag3');

@@ -34,17 +34,13 @@ class QueryBuilderTest extends TestCase
 
         $product = DB::collection('items')->first();
 
-        $pid = (string) ($product['_id']);
-
-        DB::collection('items')->where('user_id', $user_id)->delete($pid);
+        DB::collection('items')->where('user_id', $user_id)->delete($product['_id']);
 
         $this->assertEquals(3, DB::collection('items')->count());
 
         $product = DB::collection('items')->first();
 
-        $pid = $product['_id'];
-
-        DB::collection('items')->where('user_id', $user_id)->delete($pid);
+        DB::collection('items')->where('user_id', $user_id)->delete($product['_id']);
 
         DB::collection('items')->where('user_id', $user_id)->delete(md5('random-id'));
 
