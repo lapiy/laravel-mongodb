@@ -322,7 +322,7 @@ class ModelTest extends TestCase
         $this->assertEquals(['_id', 'created_at', 'name', 'type', 'updated_at'], $keys);
         $this->assertIsString($array['created_at']);
         $this->assertIsString($array['updated_at']);
-        $this->assertIsString($array['_id']);
+        $this->assertInstanceOf(ObjectID::class, $array['_id']);
     }
 
     public function testUnset(): void
@@ -418,7 +418,7 @@ class ModelTest extends TestCase
         $user->pull('tags', ['tag2', 'tag3']);
 
         $this->assertEquals([], $user->tags);
-        $user = User::where('_id', $user->_id)->first();
+        $user = User::where('_id', new ObjectID($user->_id))->first();
         $this->assertEquals([], $user->tags);
     }
 

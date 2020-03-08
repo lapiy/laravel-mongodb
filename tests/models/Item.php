@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Jenssegers\Mongodb\Casts\ObjectIDCaster;
 use Jenssegers\Mongodb\Eloquent\Builder;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
@@ -14,6 +15,8 @@ class Item extends Eloquent
 {
     protected $connection = 'mongodb';
     protected $collection = 'items';
+    protected $casts = ['user_id' => ObjectIDCaster::class];
+
     protected static $unguarded = true;
 
     public function user(): BelongsTo
