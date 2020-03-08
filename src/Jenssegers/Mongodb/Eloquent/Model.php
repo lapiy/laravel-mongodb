@@ -32,14 +32,7 @@ abstract class Model extends BaseModel
      * The primary key type.
      * @var string
      */
-    protected $keyType = 'objectid';
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
+    protected $keyType = 'string';
 
     /**
      * The parent relation instance.
