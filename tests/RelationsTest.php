@@ -332,7 +332,7 @@ class RelationsTest extends TestCase
 
         // Refetch
         $user = User::find($user->_id);
-        $group = Group::find(new ObjectID($group->_id));
+        $group = Group::find($group->_id);
 
         // Check for custom relation attributes
         $this->assertArrayHasKey('users', $group->getAttributes());

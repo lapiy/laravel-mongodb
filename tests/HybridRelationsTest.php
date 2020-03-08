@@ -62,7 +62,7 @@ class HybridRelationsTest extends TestCase
         // MongoDB has many
         $book = new MysqlBook(['title' => 'Game of Thrones']);
         $user->mysqlBooks()->save($book);
-        $user = User::find(new ObjectId($user->_id)); // refetch
+        $user = User::find($user->_id); // refetch
         $this->assertCount(1, $user->mysqlBooks);
 
         // SQL belongs to
