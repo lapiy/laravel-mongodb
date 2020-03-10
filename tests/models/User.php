@@ -26,6 +26,7 @@ class User extends Eloquent implements AuthenticatableContract, CanResetPassword
 
     protected $connection = 'mongodb';
     protected $dates = ['birthday', 'entry.date'];
+    protected $dateFormat = 'l jS \of F Y h:i:s A';
     protected static $unguarded = true;
 
     public function books()
@@ -66,10 +67,5 @@ class User extends Eloquent implements AuthenticatableContract, CanResetPassword
     public function photos()
     {
         return $this->morphMany('Photo', 'imageable');
-    }
-
-    public function getDateFormat()
-    {
-        return 'l jS \of F Y h:i:s A';
     }
 }
