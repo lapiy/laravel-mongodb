@@ -43,7 +43,11 @@ class MongoQueue extends DatabaseQueue
 
         if ($job = $this->getNextAvailableJobAndReserve($queue)) {
             return new MongoJob(
-                $this->container, $this, $job, $this->connectionName, $queue
+                $this->container,
+                $this,
+                $job,
+                $this->connectionName,
+                $queue
             );
         }
     }
