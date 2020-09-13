@@ -37,7 +37,7 @@ jobs:
         php-version: ${{ matrix.php }}
         extensions: curl,mbstring,xdebug,mongodb
         coverage: xdebug
-        tools: composer
+        tools: composer,pecl
     - name: Show PHP version
       run: php -v && composer -V
     - name: Show Docker version
