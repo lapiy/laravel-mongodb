@@ -35,9 +35,9 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
-        extensions: curl,mbstring,xdebug,mongodb
+        extensions: curl,mbstring,xdebug
         coverage: xdebug
-        tools: composer,pecl
+        tools: composer
     - name: Show PHP version
       run: php -v && composer -V
     - name: Show Docker version
