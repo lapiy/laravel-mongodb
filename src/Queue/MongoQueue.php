@@ -1,10 +1,10 @@
 <?php
 
-namespace Jenssegers\Mongodb\Queue;
+namespace Laramongo\Mongodb\Queue;
 
 use Carbon\Carbon;
 use Illuminate\Queue\DatabaseQueue;
-use Jenssegers\Mongodb\Connection;
+use Laramongo\Mongodb\Connection;
 use MongoDB\Operation\FindOneAndUpdate;
 
 class MongoQueue extends DatabaseQueue

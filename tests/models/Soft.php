@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-use Jenssegers\Mongodb\Eloquent\SoftDeletes;
+use Laramongo\Mongodb\Eloquent\Model as Eloquent;
+use Laramongo\Mongodb\Eloquent\SoftDeletes;
 
 /**
  * Class Soft.

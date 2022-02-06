@@ -1,5 +1,5 @@
 {
-    "name": "jenssegers/mongodb",
+    "name": "laramongo/compatibility",
     "description": "A MongoDB based Eloquent model and Query builder for Laravel (Moloquent)",
     "keywords": [
         "laravel",
@@ -10,7 +10,7 @@
         "model",
         "moloquent"
     ],
-    "homepage": "https://github.com/jenssegers/laravel-mongodb",
+    "homepage": "https://github.com/laramongo/laravel-mongodb",
     "authors": [
         {
             "name": "Jens Segers",
@@ -33,7 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Jenssegers\\Mongodb\\": "src/"
+            "Laramongo\\Mongodb\\": "src/"
         }
     },
     "autoload-dev": {
@@ -43,15 +43,11 @@
             "tests/seeds"
         ]
     },
-    "suggest": {
-        "jenssegers/mongodb-session": "Add MongoDB session support to Laravel-MongoDB",
-        "jenssegers/mongodb-sentry": "Add Sentry support to Laravel-MongoDB"
-    },
     "extra": {
         "laravel": {
             "providers": [
-                "Jenssegers\\Mongodb\\MongodbServiceProvider",
-                "Jenssegers\\Mongodb\\MongodbQueueServiceProvider"
+                "Laramongo\\Mongodb\\MongodbServiceProvider",
+                "Laramongo\\Mongodb\\MongodbQueueServiceProvider"
             ]
         }
     },

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jenssegers\Mongodb\Auth;
+namespace Laramongo\Mongodb\Auth;
 
 use DateTime;
 use DateTimeZone;

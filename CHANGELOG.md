@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Compatibility with Laravel 9.x [#](https://github.com/jenssegers/laravel-mongodb/pull/) by [@divine](https://github.com/divine).
 
+### Changed
+- Changed namespace from `Jenssegers` to `Laramongo`.
+
 ## [3.8.4] - 2021-05-27
 
 ### Fixed

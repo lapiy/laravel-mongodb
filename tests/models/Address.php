@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-use Jenssegers\Mongodb\Relations\EmbedsMany;
+use Laramongo\Mongodb\Eloquent\Model as Eloquent;
+use Laramongo\Mongodb\Relations\EmbedsMany;
 
 class Address extends Eloquent
 {

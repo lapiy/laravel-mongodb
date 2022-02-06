@@ -1,16 +1,16 @@
 <?php
 
-namespace Jenssegers\Mongodb\Eloquent;
+namespace Laramongo\Mongodb\Eloquent;
 
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Str;
-use Jenssegers\Mongodb\Helpers\EloquentBuilder;
-use Jenssegers\Mongodb\Relations\BelongsTo;
-use Jenssegers\Mongodb\Relations\BelongsToMany;
-use Jenssegers\Mongodb\Relations\HasMany;
-use Jenssegers\Mongodb\Relations\HasOne;
-use Jenssegers\Mongodb\Relations\MorphMany;
-use Jenssegers\Mongodb\Relations\MorphTo;
+use Laramongo\Mongodb\Helpers\EloquentBuilder;
+use Laramongo\Mongodb\Relations\BelongsTo;
+use Laramongo\Mongodb\Relations\BelongsToMany;
+use Laramongo\Mongodb\Relations\HasMany;
+use Laramongo\Mongodb\Relations\HasOne;
+use Laramongo\Mongodb\Relations\MorphMany;
+use Laramongo\Mongodb\Relations\MorphTo;
 
 trait HybridRelations
 {
@@ -24,7 +24,7 @@ trait HybridRelations
     public function hasOne($related, $foreignKey = null, $localKey = null)
     {
         // Check if it is a relation with an original model.
-        if (! is_subclass_of($related, \Jenssegers\Mongodb\Eloquent\Model::class)) {
+        if (! is_subclass_of($related, \Laramongo\Mongodb\Eloquent\Model::class)) {
             return parent::hasOne($related, $foreignKey, $localKey);
         }
 
@@ -49,7 +49,7 @@ trait HybridRelations
     public function morphOne($related, $name, $type = null, $id = null, $localKey = null)
     {
         // Check if it is a relation with an original model.
-        if (! is_subclass_of($related, \Jenssegers\Mongodb\Eloquent\Model::class)) {
+        if (! is_subclass_of($related, \Laramongo\Mongodb\Eloquent\Model::class)) {
             return parent::morphOne($related, $name, $type, $id, $localKey);
         }
 
@@ -72,7 +72,7 @@ trait HybridRelations
     public function hasMany($related, $foreignKey = null, $localKey = null)
     {
         // Check if it is a relation with an original model.
-        if (! is_subclass_of($related, \Jenssegers\Mongodb\Eloquent\Model::class)) {
+        if (! is_subclass_of($related, \Laramongo\Mongodb\Eloquent\Model::class)) {
             return parent::hasMany($related, $foreignKey, $localKey);
         }
 
@@ -97,7 +97,7 @@ trait HybridRelations
     public function morphMany($related, $name, $type = null, $id = null, $localKey = null)
     {
         // Check if it is a relation with an original model.
-        if (! is_subclass_of($related, \Jenssegers\Mongodb\Eloquent\Model::class)) {
+        if (! is_subclass_of($related, \Laramongo\Mongodb\Eloquent\Model::class)) {
             return parent::morphMany($related, $name, $type, $id, $localKey);
         }
 
@@ -135,7 +135,7 @@ trait HybridRelations
         }
 
         // Check if it is a relation with an original model.
-        if (! is_subclass_of($related, \Jenssegers\Mongodb\Eloquent\Model::class)) {
+        if (! is_subclass_of($related, \Laramongo\Mongodb\Eloquent\Model::class)) {
             return parent::belongsTo($related, $foreignKey, $otherKey, $relation);
         }
 
@@ -230,7 +230,7 @@ trait HybridRelations
         }
 
         // Check if it is a relation with an original model.
-        if (! is_subclass_of($related, \Jenssegers\Mongodb\Eloquent\Model::class)) {
+        if (! is_subclass_of($related, \Laramongo\Mongodb\Eloquent\Model::class)) {
             return parent::belongsToMany(
                 $related,
                 $collection,
@@ -293,7 +293,7 @@ trait HybridRelations
      */
     public function newEloquentBuilder($query)
     {
-        if (is_subclass_of($this, \Jenssegers\Mongodb\Eloquent\Model::class)) {
+        if (is_subclass_of($this, \Laramongo\Mongodb\Eloquent\Model::class)) {
             return new Builder($query);
         }
 

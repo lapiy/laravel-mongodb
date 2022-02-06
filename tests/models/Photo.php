@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use Laramongo\Mongodb\Eloquent\Model as Eloquent;
 
 class Photo extends Eloquent
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jenssegers\Mongodb\Eloquent;
+namespace Laramongo\Mongodb\Eloquent;
 
 trait SoftDeletes
 {

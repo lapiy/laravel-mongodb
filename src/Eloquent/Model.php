@@ -1,6 +1,6 @@
 <?php
 
-namespace Jenssegers\Mongodb\Eloquent;
+namespace Laramongo\Mongodb\Eloquent;
 
 use DateTimeInterface;
 use Illuminate\Contracts\Queue\QueueableCollection;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
-use Jenssegers\Mongodb\Query\Builder as QueryBuilder;
+use Laramongo\Mongodb\Query\Builder as QueryBuilder;
 use MongoDB\BSON\Binary;
 use MongoDB\BSON\ObjectID;
 use MongoDB\BSON\UTCDateTime;

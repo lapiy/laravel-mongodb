@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use Laramongo\Mongodb\Eloquent\Model as Eloquent;
 
 /**
  * Class Birthday.

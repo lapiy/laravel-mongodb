@@ -1,10 +1,10 @@
 <?php
 
-namespace Jenssegers\Mongodb;
+namespace Laramongo\Mongodb;
 
 use Illuminate\Support\ServiceProvider;
-use Jenssegers\Mongodb\Eloquent\Model;
-use Jenssegers\Mongodb\Queue\MongoConnector;
+use Laramongo\Mongodb\Eloquent\Model;
+use Laramongo\Mongodb\Queue\MongoConnector;
 
 class MongodbServiceProvider extends ServiceProvider
 {

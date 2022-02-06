@@ -1,6 +1,6 @@
 <?php
 
-namespace Jenssegers\Mongodb\Validation;
+namespace Laramongo\Mongodb\Validation;
 
 class DatabasePresenceVerifier extends \Illuminate\Validation\DatabasePresenceVerifier
 {

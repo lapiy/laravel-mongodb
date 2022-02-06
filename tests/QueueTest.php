@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use Jenssegers\Mongodb\Queue\Failed\MongoFailedJobProvider;
-use Jenssegers\Mongodb\Queue\MongoQueue;
+use Laramongo\Mongodb\Queue\Failed\MongoFailedJobProvider;
+use Laramongo\Mongodb\Queue\MongoQueue;
 
 class QueueTest extends TestCase
 {
@@ -31,7 +31,7 @@ class QueueTest extends TestCase
 
         // Get and reserve the test job (next available)
         $job = Queue::pop('test');
-        $this->assertInstanceOf(Jenssegers\Mongodb\Queue\MongoJob::class, $job);
+        $this->assertInstanceOf(Laramongo\Mongodb\Queue\MongoJob::class, $job);
         $this->assertEquals(1, $job->isReserved());
         $this->assertEquals(json_encode([
             'uuid' => $uuid,

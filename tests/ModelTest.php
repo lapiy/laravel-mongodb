@@ -6,9 +6,9 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Date;
-use Jenssegers\Mongodb\Collection;
-use Jenssegers\Mongodb\Connection;
-use Jenssegers\Mongodb\Eloquent\Model;
+use Laramongo\Mongodb\Collection;
+use Laramongo\Mongodb\Connection;
+use Laramongo\Mongodb\Eloquent\Model;
 use MongoDB\BSON\ObjectID;
 use MongoDB\BSON\UTCDateTime;
 

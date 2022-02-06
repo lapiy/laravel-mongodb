@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\DB;
-use Jenssegers\Mongodb\Collection;
-use Jenssegers\Mongodb\Connection;
-use Jenssegers\Mongodb\Query\Builder;
-use Jenssegers\Mongodb\Schema\Builder as SchemaBuilder;
+use Laramongo\Mongodb\Collection;
+use Laramongo\Mongodb\Connection;
+use Laramongo\Mongodb\Query\Builder;
+use Laramongo\Mongodb\Schema\Builder as SchemaBuilder;
 use MongoDB\Client;
 use MongoDB\Database;
 

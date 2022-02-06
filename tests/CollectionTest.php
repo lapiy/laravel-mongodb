@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Jenssegers\Mongodb\Collection;
-use Jenssegers\Mongodb\Connection;
+use Laramongo\Mongodb\Collection;
+use Laramongo\Mongodb\Connection;
 use MongoDB\BSON\ObjectID;
 use MongoDB\Collection as MongoCollection;
 

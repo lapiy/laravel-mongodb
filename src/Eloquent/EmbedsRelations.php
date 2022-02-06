@@ -1,10 +1,10 @@
 <?php
 
-namespace Jenssegers\Mongodb\Eloquent;
+namespace Laramongo\Mongodb\Eloquent;
 
 use Illuminate\Support\Str;
-use Jenssegers\Mongodb\Relations\EmbedsMany;
-use Jenssegers\Mongodb\Relations\EmbedsOne;
+use Laramongo\Mongodb\Relations\EmbedsMany;
+use Laramongo\Mongodb\Relations\EmbedsOne;
 
 trait EmbedsRelations
 {
@@ -14,7 +14,7 @@ trait EmbedsRelations
      * @param string $localKey
      * @param string $foreignKey
      * @param string $relation
-     * @return \Jenssegers\Mongodb\Relations\EmbedsMany
+     * @return \Laramongo\Mongodb\Relations\EmbedsMany
      */
     protected function embedsMany($related, $localKey = null, $foreignKey = null, $relation = null)
     {
@@ -48,7 +48,7 @@ trait EmbedsRelations
      * @param string $localKey
      * @param string $foreignKey
      * @param string $relation
-     * @return \Jenssegers\Mongodb\Relations\EmbedsOne
+     * @return \Laramongo\Mongodb\Relations\EmbedsOne
      */
     protected function embedsOne($related, $localKey = null, $foreignKey = null, $relation = null)
     {

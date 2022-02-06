@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Jenssegers\Mongodb\Eloquent\Builder;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use Laramongo\Mongodb\Eloquent\Builder;
+use Laramongo\Mongodb\Eloquent\Model as Eloquent;
 
 /**
  * Class Item.

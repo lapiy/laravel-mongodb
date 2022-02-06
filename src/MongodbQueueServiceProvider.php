@@ -1,9 +1,9 @@
 <?php
 
-namespace Jenssegers\Mongodb;
+namespace Laramongo\Mongodb;
 
 use Illuminate\Queue\QueueServiceProvider;
-use Jenssegers\Mongodb\Queue\Failed\MongoFailedJobProvider;
+use Laramongo\Mongodb\Queue\Failed\MongoFailedJobProvider;
 
 class MongodbQueueServiceProvider extends QueueServiceProvider
 {
